@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CAJONES DE PAN</title>
+
+  <link rel="stylesheet" href="./css/bootstrap.css">
+  
+</head>
+
+<body>
+    
+    <!-- your content here... -->
+    <div class="container-fluid fixed-top" style="height: 100vh;" x-data="startFun">
+        <div class="row">
+            <canvas id="canvref" style="border:1px solid #d3d3d3;"></canvas>
+        </div>
+    </div>
+    <script>
+        function startFun(){
+            return {
+                tim: (new Date()).getTime(),
+                panimg : new Image(),
+                filaimg : new Image(),
+                get panurl() {
+                    return "http://192.168.1.74:88/cgi-bin/CGIProxy.fcgi?cmd=snapPicture2&usr=opencv&pwd=opencv1" + "&tim=" + this.tim
+                },
+                get filaurl() {
+                    return "http://192.168.1.78:88/cgi-bin/CGIProxy.fcgi?cmd=snapPicture2&usr=opencv&pwd=opencv1" + "&tim=" + this.tim
+                },
+                updateTim(){
+                    this.tim=(new Date()).getTime();
+                    this.draw();
+                },
+                init(){
+                    let ctx = document.getElementById('canvref').getContext("2d");
+                    ctx.canvas.width  = window.innerWidth;
+                    ctx.canvas.height = window.innerHeight * 0.9;
+                    
+                    this.panimg.onload = () => {
+                        ctx.drawImage(this.panimg, 0, 0, 600, 550, 0, 0, ctx.canvas.width * 0.4, ctx.canvas.height);
+                    };
+                    this.filaimg.onload = () => {
+                        ctx.drawImage(this.filaimg, 480, 0, 700, 650, ctx.canvas.width * 0.4 , 0, ctx.canvas.width * 0.6, ctx.canvas.height);
+                    };
+
+                    setInterval(() => this.updateTim(), 5000);
+                },
+                draw(){
+                    let ctx = document.getElementById('canvref').getContext("2d");
+
+                    this.panimg.src = this.panurl;
+                    this.filaimg.src = this.filaurl;
+
+                    //let img = this.$refs.panimg;
+                    //ctx.drawImage(img,10,10)
+                }
+
+            }
+        }
+    </script>
+    <script src="./alpine.js"></script>
+    
+</body>
+</html>
