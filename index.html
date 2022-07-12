@@ -13,7 +13,7 @@
     
     <!-- your content here... -->
     <div class="" style="position:fixed;height: 100vh;width: 100%;" x-data="startFun">
-        <h1 x-text="date.toLocaleString('es-CL')" class="text-center" style="background-color: blue; color: white;height: 10vh;font-size: 7vh;padding: 0; margin: 0;"></h1>
+        <h1 x-text="date.toLocaleString('es-CL')" class="text-center" style="background-color: blue; color: white;height: 10vh;font-size: 7vh;font-weight: bold;padding: 0; margin: 0;"></h1>
         <canvas id="canvref" style="border:1px solid #d3d3d3;"></canvas>
     </div>
     <script>
@@ -50,8 +50,8 @@
                     this.panimg.src = this.panurl;
                     this.filaimg.src = this.filaurl;
 
-                    setInterval(() => this.updateTim(), 5000);
-                    setInterval(() => this.updateDate(), 1000);
+                    setInterval(() => this.updateTim(), 10000);
+                    setInterval(() => this.updateDate(), 2000);
                 },
                 draw(){
                     let ctx = document.getElementById('canvref').getContext("2d");
